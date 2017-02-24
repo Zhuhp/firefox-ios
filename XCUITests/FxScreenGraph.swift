@@ -191,11 +191,15 @@ func createScreenGraph(_ app: XCUIApplication, url: String = "https://www.mozill
 // Invoking this method in BrowserTab will create another tab,
 // as that is the shortest path to itself
 extension Navigator {
-    func openNewURL(urlString: String) {
+    func openNewURL(urlString: String, gotoURL: Bool = true) {
         self.goto(NewTabScreen)
         let app = XCUIApplication()
         app.textFields["url"].tap()
-        app.textFields["address"].typeText(urlString + "\r")
-        self.nowAt(BrowserTab)
+        if gotoURL {
+            app.textFields["address"].typeText(urlString + "\r")
+            self.nowAt(BrowserTab)
+        } else {
+            app.textFields["address"].typeText(urlString)
+        }
     }
 }
